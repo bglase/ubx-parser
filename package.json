@@ -1,23 +1,26 @@
 {
-  "name": "ubx-parser",
-  "version": "1.0.0",
-  "description": "",
-  "main": "lib/index.js",
-  "types": "lib",
-  "scripts": {
-    "build": "tsc -p ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Ayax0/ubx-parser.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Ayax0/ubx-parser/issues"
-  },
-  "homepage": "https://github.com/Ayax0/ubx-parser#readme",
-  "author": "Simon Gander",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^18.11.18"
-  }
+    "name": "@nextlvlup/ubx-parser",
+    "version": "1.0.0",
+    "main": "lib/index.js",
+    "types": "lib",
+    "scripts": {
+        "build": "tsc -p ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Ayax0/ubx-parser.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Ayax0/ubx-parser/issues"
+    },
+    "homepage": "https://github.com/Ayax0/ubx-parser#readme",
+    "author": "Simon Gander",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^18.11.18"
+    },
+    "directories": {
+        "lib": "lib"
+    },
+    "description": ""
 }
