@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var net_1 = require("net");
+var src_1 = require("./src");
+var parser = new src_1.UBXParser();
+var client = new net_1.Socket();
+client.connect({ host: "192.168.1.154", port: 1234 }, function () { return console.log("connected"); });
+client.on("data", function (buffer) { return parser.parse(buffer); });
+parser.on("error", function (error) { return console.error(error); });
+parser.on("data", function (data) { return console.log(data); });

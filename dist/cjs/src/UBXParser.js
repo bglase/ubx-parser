@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UBXParser = void 0;
+var ubx_esf_meas_1 = require("./parser/ubx-esf-meas");
+var ubx_esf_status_1 = require("./parser/ubx-esf-status");
 var ubx_nav_pvt_1 = require("./parser/ubx-nav-pvt");
 var UBXParser = /** @class */ (function () {
     function UBXParser() {
@@ -8,6 +10,8 @@ var UBXParser = /** @class */ (function () {
         this.packetListeners = new Map();
         this.localBuffer = Buffer.from("");
         this.registerParser(new ubx_nav_pvt_1.UBX_NAV_PVT_Parser());
+        this.registerParser(new ubx_esf_status_1.UBX_ESF_STATUS_Parser());
+        this.registerParser(new ubx_esf_meas_1.UBX_ESF_MEAS_Parser());
     }
     UBXParser.prototype.parse = function (buffer) {
         var _this = this;

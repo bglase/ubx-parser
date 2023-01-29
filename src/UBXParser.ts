@@ -1,4 +1,6 @@
 import { PacketParser } from "./PacketParser";
+import { UBX_ESF_MEAS_Parser } from "./parser/ubx-esf-meas";
+import { UBX_ESF_STATUS_Parser } from "./parser/ubx-esf-status";
 import { UBX_NAV_PVT_Parser } from "./parser/ubx-nav-pvt";
 
 export class UBXParser {
@@ -8,6 +10,8 @@ export class UBXParser {
 
     constructor() {
         this.registerParser(new UBX_NAV_PVT_Parser());
+        this.registerParser(new UBX_ESF_STATUS_Parser());
+        this.registerParser(new UBX_ESF_MEAS_Parser());
     }
 
     parse(buffer: Buffer): void {

@@ -1,3 +1,5 @@
+import { UBX_ESF_MEAS_Parser } from "./parser/ubx-esf-meas";
+import { UBX_ESF_STATUS_Parser } from "./parser/ubx-esf-status";
 import { UBX_NAV_PVT_Parser } from "./parser/ubx-nav-pvt";
 var UBXParser = /** @class */ (function () {
     function UBXParser() {
@@ -5,6 +7,8 @@ var UBXParser = /** @class */ (function () {
         this.packetListeners = new Map();
         this.localBuffer = Buffer.from("");
         this.registerParser(new UBX_NAV_PVT_Parser());
+        this.registerParser(new UBX_ESF_STATUS_Parser());
+        this.registerParser(new UBX_ESF_MEAS_Parser());
     }
     UBXParser.prototype.parse = function (buffer) {
         var _this = this;
