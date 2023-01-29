@@ -30,7 +30,6 @@ export default class UBXParser {
 
         this.parsers.forEach((parser) => {
             if (parser.compareSignature(packet_class, packet_id)) {
-                console.log(packet_id, parser.compareSignature(packet_class, packet_id));
                 this.packetListeners.get("data")?.forEach((listener) => {
                     try {
                         listener(parser.parse(payload));
