@@ -38,7 +38,10 @@ var UBXParser = /** @class */ (function () {
                 (_a = _this.packetListeners.get("data")) === null || _a === void 0 ? void 0 : _a.forEach(function (listener) {
                     var _a;
                     try {
-                        listener(parser.parse(payload));
+                        var data = parser.parse(payload);
+                        data.packet_class = packet_class;
+                        data.packet_id = packet_id;
+                        listener(data);
                     }
                     catch (error) {
                         (_a = _this.packetListeners.get("error")) === null || _a === void 0 ? void 0 : _a.forEach(function (listener) { return listener(error); });

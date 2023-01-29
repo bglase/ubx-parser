@@ -43,7 +43,10 @@ export class UBXParser {
             if (parser.compareSignature(packet_class, packet_id)) {
                 this.packetListeners.get("data")?.forEach((listener) => {
                     try {
-                        listener(parser.parse(payload));
+                        const data = parser.parse(payload) as any;
+                        data.packet_class = packet_class;
+                        data.packet_id = packet_id;
+                        listener(data);
                     } catch (error) {
                         this.packetListeners.get("error")?.forEach((listener) => listener(error));
                     }

@@ -54,7 +54,7 @@ export class UBX_NAV_PVT_Parser extends PacketParser {
     }
 }
 
-interface UBX_NAV_PVT_DATA {
+export interface UBX_NAV_PVT_DATA {
     iTOW: number;
     year: number;
     month: number;

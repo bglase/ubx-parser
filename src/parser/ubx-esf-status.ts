@@ -41,7 +41,7 @@ export class UBX_ESF_STATUS_Parser extends PacketParser {
     }
 }
 
-interface UBX_ESF_STATUS_DATA {
+export interface UBX_ESF_STATUS_DATA {
     iTOW: number;
     version: number;
     wtInitStatus: number;
@@ -53,7 +53,7 @@ interface UBX_ESF_STATUS_DATA {
     sensors: [UBX_ESF_STATUS_SENSOR?];
 }
 
-interface UBX_ESF_STATUS_SENSOR {
+export interface UBX_ESF_STATUS_SENSOR {
     type: number;
     used: boolean;
     ready: boolean;

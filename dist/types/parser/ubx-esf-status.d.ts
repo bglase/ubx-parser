@@ -4,7 +4,7 @@ export declare class UBX_ESF_STATUS_Parser extends PacketParser {
     constructor();
     parse(payload: Buffer): UBX_ESF_STATUS_DATA;
 }
-interface UBX_ESF_STATUS_DATA {
+export interface UBX_ESF_STATUS_DATA {
     iTOW: number;
     version: number;
     wtInitStatus: number;
@@ -15,7 +15,7 @@ interface UBX_ESF_STATUS_DATA {
     numSens: number;
     sensors: [UBX_ESF_STATUS_SENSOR?];
 }
-interface UBX_ESF_STATUS_SENSOR {
+export interface UBX_ESF_STATUS_SENSOR {
     type: number;
     used: boolean;
     ready: boolean;
@@ -27,4 +27,3 @@ interface UBX_ESF_STATUS_SENSOR {
     missingMeas: number;
     noisyMeas: number;
 }
-export {};

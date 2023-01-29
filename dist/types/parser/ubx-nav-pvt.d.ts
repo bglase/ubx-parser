@@ -4,7 +4,7 @@ export declare class UBX_NAV_PVT_Parser extends PacketParser {
     constructor();
     parse(payload: Buffer): UBX_NAV_PVT_DATA;
 }
-interface UBX_NAV_PVT_DATA {
+export interface UBX_NAV_PVT_DATA {
     iTOW: number;
     year: number;
     month: number;
@@ -48,4 +48,3 @@ interface UBX_NAV_PVT_DATA {
     magDec: number;
     magAcc: number;
 }
-export {};
