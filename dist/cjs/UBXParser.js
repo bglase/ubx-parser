@@ -1,29 +1,13 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readBitFromUInt32 = exports.readBitFromUInt16 = exports.readBitFromUInt8 = exports.PacketParser = exports.UBXParser = void 0;
-var fs_1 = __importDefault(require("fs"));
+exports.UBXParser = void 0;
+var ubx_nav_pvt_1 = require("./parser/ubx-nav-pvt");
 var UBXParser = /** @class */ (function () {
     function UBXParser() {
-        var _this = this;
         this.parsers = [];
         this.packetListeners = new Map();
         this.localBuffer = Buffer.from("");
-        try {
-            fs_1.default.readdirSync(__dirname + "/parser").forEach(function (file) {
-                if (file.match(/\.(?:ts|js)/)) {
-                    var Parser = require("./parser/" + file).default;
-                    var parser_instance = new Parser();
-                    if (parser_instance instanceof PacketParser)
-                        _this.registerParser(parser_instance);
-                }
-            });
-        }
-        catch (error) {
-            console.error(error);
-        }
+        this.registerParser(new ubx_nav_pvt_1.UBX_NAV_PVT_Parser());
     }
     UBXParser.prototype.parse = function (buffer) {
         var _this = this;
@@ -78,55 +62,3 @@ var UBXParser = /** @class */ (function () {
     return UBXParser;
 }());
 exports.UBXParser = UBXParser;
-var PacketParser = /** @class */ (function () {
-    function PacketParser(packet_class, packet_id) {
-        this.packet_class = packet_class;
-        this.packet_id = packet_id;
-    }
-    PacketParser.prototype.compareSignature = function (packet_class, packet_id) {
-        return this.packet_class == packet_class && this.packet_id == packet_id;
-    };
-    return PacketParser;
-}());
-exports.PacketParser = PacketParser;
-function readBitFromUInt8(byte, offset, length) {
-    if (offset === void 0) { offset = 0; }
-    if (length === void 0) { length = 1; }
-    var mask = 0xff >> (8 - length);
-    var bit_offset = mask << offset;
-    return (byte & bit_offset) >> offset;
-}
-exports.readBitFromUInt8 = readBitFromUInt8;
-function readBitFromUInt16(byte, offset, length) {
-    if (offset === void 0) { offset = 0; }
-    if (length === void 0) { length = 1; }
-    if (offset <= 7 && offset + length > 8) {
-        var blockA = readBitFromUInt8(byte & 0xff, offset, offset + length > 8 ? 8 - offset : length);
-        var blockB = readBitFromUInt8((byte >> 8) & 0xff, 0, offset + length - 8);
-        return (blockB << (8 - offset)) | blockA;
-    }
-    else if (offset <= 7) {
-        return readBitFromUInt8(byte, offset, length);
-    }
-    else {
-        return readBitFromUInt8((byte >> 8) & 0xff, offset - 8, length);
-    }
-}
-exports.readBitFromUInt16 = readBitFromUInt16;
-function readBitFromUInt32(byte, offset, length) {
-    if (offset === void 0) { offset = 0; }
-    if (length === void 0) { length = 1; }
-    if (offset <= 15 && offset + length > 16) {
-        var blockA = readBitFromUInt16(byte & 0xffff, offset, offset + length > 16 ? 16 - offset : length);
-        var blockB = readBitFromUInt16((byte >> 16) & 0xffff, 0, offset + length - 16);
-        return (blockB << (16 - offset)) | blockA;
-    }
-    else if (offset <= 15) {
-        return readBitFromUInt16(byte, offset, length);
-    }
-    else {
-        return readBitFromUInt16((byte >> 16) & 0xffff, offset - 16, length);
-    }
-}
-exports.readBitFromUInt32 = readBitFromUInt32;
-//# sourceMappingURL=index.js.map

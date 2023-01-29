@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -14,8 +13,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var __1 = require("..");
+import { readBitFromUInt16, readBitFromUInt8 } from "../Utils";
+import { PacketParser } from "../PacketParser";
 var UBX_NAV_PVT_Parser = /** @class */ (function (_super) {
     __extends(UBX_NAV_PVT_Parser, _super);
     function UBX_NAV_PVT_Parser() {
@@ -30,21 +29,21 @@ var UBX_NAV_PVT_Parser = /** @class */ (function (_super) {
             hour: payload.readUInt8(8),
             min: payload.readUInt8(9),
             sec: payload.readUInt8(10),
-            validDate: (0, __1.readBitFromUInt8)(payload.readUInt8(11), 0) == 1,
-            validTime: (0, __1.readBitFromUInt8)(payload.readUInt8(11), 1) == 1,
-            fullyResolved: (0, __1.readBitFromUInt8)(payload.readUInt8(11), 2) == 1,
-            validMag: (0, __1.readBitFromUInt8)(payload.readUInt8(11), 3) == 1,
+            validDate: readBitFromUInt8(payload.readUInt8(11), 0) == 1,
+            validTime: readBitFromUInt8(payload.readUInt8(11), 1) == 1,
+            fullyResolved: readBitFromUInt8(payload.readUInt8(11), 2) == 1,
+            validMag: readBitFromUInt8(payload.readUInt8(11), 3) == 1,
             tAcc: payload.readUInt32LE(12),
             nano: payload.readInt32LE(16),
             fixType: payload.readUInt8(20),
-            gnssFixOK: (0, __1.readBitFromUInt8)(payload.readUInt8(21), 0) == 1,
-            diffSoln: (0, __1.readBitFromUInt8)(payload.readUInt8(21), 1) == 1,
-            psmState: (0, __1.readBitFromUInt8)(payload.readUInt8(21), 2, 3),
-            headVehValid: (0, __1.readBitFromUInt8)(payload.readUInt8(21), 5) == 1,
-            carrSoln: (0, __1.readBitFromUInt8)(payload.readUInt8(21), 6, 2),
-            confirmedAvai: (0, __1.readBitFromUInt8)(payload.readUInt8(22), 5) == 1,
-            confirmedDate: (0, __1.readBitFromUInt8)(payload.readUInt8(22), 6) == 1,
-            confirmedTime: (0, __1.readBitFromUInt8)(payload.readUInt8(22), 7) == 1,
+            gnssFixOK: readBitFromUInt8(payload.readUInt8(21), 0) == 1,
+            diffSoln: readBitFromUInt8(payload.readUInt8(21), 1) == 1,
+            psmState: readBitFromUInt8(payload.readUInt8(21), 2, 3),
+            headVehValid: readBitFromUInt8(payload.readUInt8(21), 5) == 1,
+            carrSoln: readBitFromUInt8(payload.readUInt8(21), 6, 2),
+            confirmedAvai: readBitFromUInt8(payload.readUInt8(22), 5) == 1,
+            confirmedDate: readBitFromUInt8(payload.readUInt8(22), 6) == 1,
+            confirmedTime: readBitFromUInt8(payload.readUInt8(22), 7) == 1,
             numSV: payload.readUInt8(23),
             lon: payload.readInt32LE(24) * 1e-7,
             lat: payload.readInt32LE(28) * 1e-7,
@@ -60,14 +59,13 @@ var UBX_NAV_PVT_Parser = /** @class */ (function (_super) {
             sAcc: payload.readUInt32LE(68),
             headAcc: payload.readUInt32LE(72) * 1e-5,
             pDOP: payload.readUInt16LE(76) * 0.01,
-            invalidLlh: (0, __1.readBitFromUInt16)(payload.readUInt16LE(78), 0) == 1,
-            lastCorrectionAge: (0, __1.readBitFromUInt16)(payload.readUInt16LE(78), 1, 4),
+            invalidLlh: readBitFromUInt16(payload.readUInt16LE(78), 0) == 1,
+            lastCorrectionAge: readBitFromUInt16(payload.readUInt16LE(78), 1, 4),
             headVeh: payload.readInt32LE(84) * 1e-5,
             magDec: payload.readInt16LE(88) * 1e-2,
             magAcc: payload.readUInt16LE(90) * 1e-2,
         };
     };
     return UBX_NAV_PVT_Parser;
-}(__1.PacketParser));
-exports.default = UBX_NAV_PVT_Parser;
-//# sourceMappingURL=ubx-nav-pvt.js.map
+}(PacketParser));
+export { UBX_NAV_PVT_Parser };

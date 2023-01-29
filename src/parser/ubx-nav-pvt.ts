@@ -1,6 +1,7 @@
-import { PacketParser, readBitFromUInt16, readBitFromUInt8 } from "..";
+import { readBitFromUInt16, readBitFromUInt8 } from "../Utils";
+import { PacketParser } from "../PacketParser";
 
-export default class UBX_NAV_PVT_Parser extends PacketParser {
+export class UBX_NAV_PVT_Parser extends PacketParser {
     constructor() {
         super(0x01, 0x07);
     }
@@ -53,7 +54,7 @@ export default class UBX_NAV_PVT_Parser extends PacketParser {
     }
 }
 
-export interface UBX_NAV_PVT_DATA {
+interface UBX_NAV_PVT_DATA {
     iTOW: number;
     year: number;
     month: number;

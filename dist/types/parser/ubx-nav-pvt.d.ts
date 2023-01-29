@@ -1,10 +1,10 @@
 /// <reference types="node" />
-import { PacketParser } from "..";
-export default class UBX_NAV_PVT_Parser extends PacketParser {
+import { PacketParser } from "../PacketParser";
+export declare class UBX_NAV_PVT_Parser extends PacketParser {
     constructor();
     parse(payload: Buffer): UBX_NAV_PVT_DATA;
 }
-export interface UBX_NAV_PVT_DATA {
+interface UBX_NAV_PVT_DATA {
     iTOW: number;
     year: number;
     month: number;
@@ -48,4 +48,4 @@ export interface UBX_NAV_PVT_DATA {
     magDec: number;
     magAcc: number;
 }
-//# sourceMappingURL=ubx-nav-pvt.d.ts.map
+export {};
