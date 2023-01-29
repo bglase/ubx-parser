@@ -1,8 +1,9 @@
 /// <reference types="node" />
-export default class UBXParser {
+export declare class UBXParser {
     private parsers;
     private packetListeners;
     private localBuffer;
+    constructor();
     parse(buffer: Buffer): void;
     registerParser(parser: PacketParser): void;
     unregisterParser(parser: PacketParser): void;

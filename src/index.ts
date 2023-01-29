@@ -1,7 +1,23 @@
-export default class UBXParser {
+import fs from "fs";
+
+export class UBXParser {
     private parsers: Array<PacketParser> = [];
     private packetListeners: Map<string, Array<(data: any) => void>> = new Map();
     private localBuffer: Buffer = Buffer.from("");
+
+    constructor() {
+        try {
+            fs.readdirSync(__dirname + "/parser").forEach((file) => {
+                if (file.match(/\.(?:ts|js)/)) {
+                    const Parser = require("./parser/" + file).default;
+                    const parser_instance = new Parser();
+                    if (parser_instance instanceof PacketParser) this.registerParser(parser_instance);
+                }
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     parse(buffer: Buffer): void {
         this.localBuffer = Buffer.concat([this.localBuffer, buffer]);

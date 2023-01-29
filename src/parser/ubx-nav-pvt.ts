@@ -7,7 +7,7 @@ export default class UBX_NAV_PVT_Parser extends PacketParser {
 
     parse(payload: Buffer): UBX_NAV_PVT_DATA {
         return {
-            iTOW: payload.readUInt32LE(),
+            iTOW: payload.readUInt32LE(0),
             year: payload.readUInt16LE(4),
             month: payload.readUInt8(6),
             day: payload.readUInt8(7),
