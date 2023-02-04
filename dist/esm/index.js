@@ -1,3 +1,4 @@
 import { UBXParser } from "./UBXParser";
 import { PacketParser } from "./PacketParser";
-export { UBXParser, PacketParser };
+import { readBitFromUInt8, readBitFromUInt16, readBitFromUInt32 } from "./Utils";
+export { UBXParser, PacketParser, readBitFromUInt8, readBitFromUInt16, readBitFromUInt32 };

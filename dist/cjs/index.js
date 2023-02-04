@@ -1,7 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PacketParser = exports.UBXParser = void 0;
+exports.readBitFromUInt32 = exports.readBitFromUInt16 = exports.readBitFromUInt8 = exports.PacketParser = exports.UBXParser = void 0;
 var UBXParser_1 = require("./UBXParser");
 Object.defineProperty(exports, "UBXParser", { enumerable: true, get: function () { return UBXParser_1.UBXParser; } });
 var PacketParser_1 = require("./PacketParser");
 Object.defineProperty(exports, "PacketParser", { enumerable: true, get: function () { return PacketParser_1.PacketParser; } });
+var Utils_1 = require("./Utils");
+Object.defineProperty(exports, "readBitFromUInt8", { enumerable: true, get: function () { return Utils_1.readBitFromUInt8; } });
+Object.defineProperty(exports, "readBitFromUInt16", { enumerable: true, get: function () { return Utils_1.readBitFromUInt16; } });
+Object.defineProperty(exports, "readBitFromUInt32", { enumerable: true, get: function () { return Utils_1.readBitFromUInt32; } });
