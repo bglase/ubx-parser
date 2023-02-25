@@ -1,6 +1,6 @@
 {
     "name": "@nextlvlup/ubx-parser",
-    "version": "1.1.6",
+    "version": "1.1.8",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
     "umd:main": "dist/umd/index.js",

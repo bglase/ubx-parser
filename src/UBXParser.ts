@@ -17,42 +17,44 @@ export class UBXParser {
     parse(buffer: Buffer): void {
         this.localBuffer = Buffer.concat([this.localBuffer, buffer]);
 
-        const packet_start = this.localBuffer.indexOf(Buffer.from([0xb5, 0x62]));
-        const packet_end = this.localBuffer.indexOf(Buffer.from([0xb5, 0x62]), 2);
-        if (packet_start != 0 && packet_end > 0) {
-            this.localBuffer = this.localBuffer.subarray(packet_end);
-            return this.packetListeners.get("warning")?.forEach((listener) => listener(new Error("invalide packet droped")));
-        }
-
-        if (packet_start != 0 || packet_end == -1) return;
-
-        const packet = this.localBuffer.subarray(0, packet_end);
-        this.localBuffer = this.localBuffer.subarray(packet_end);
-
-        if (packet.length < 8) return this.packetListeners.get("error")?.forEach((listener) => listener(new Error("invalide packet size")));
-
-        const packet_class = packet.readUInt8(2);
-        const packet_id = packet.readUInt8(3);
-        const packet_size = packet.readUInt16LE(4);
-        const payload = packet.subarray(6, 6 + packet_size);
-
-        if (payload.length != packet_size)
-            return this.packetListeners.get("error")?.forEach((listener) => listener(new Error("invalide packet payload")));
-
-        this.parsers.forEach((parser) => {
-            if (parser.compareSignature(packet_class, packet_id)) {
-                this.packetListeners.get("data")?.forEach((listener) => {
-                    try {
-                        const data = parser.parse(payload) as any;
-                        data.packet_class = packet_class;
-                        data.packet_id = packet_id;
-                        listener(data);
-                    } catch (error) {
-                        this.packetListeners.get("error")?.forEach((listener) => listener(error));
-                    }
-                });
+        while (this.localBuffer.length > 0) {
+            const packet_start = this.localBuffer.indexOf(Buffer.from([0xb5, 0x62]));
+            const packet_end = this.localBuffer.indexOf(Buffer.from([0xb5, 0x62]), 2);
+            if (packet_start != 0 && packet_end > 0) {
+                this.localBuffer = this.localBuffer.subarray(packet_end);
+                return this.packetListeners.get("warning")?.forEach((listener) => listener(new Error("invalide packet droped")));
             }
-        });
+
+            if (packet_start != 0 || packet_end == -1) return;
+
+            const packet = this.localBuffer.subarray(0, packet_end);
+            this.localBuffer = this.localBuffer.subarray(packet_end);
+
+            if (packet.length < 8) return this.packetListeners.get("error")?.forEach((listener) => listener(new Error("invalide packet size")));
+
+            const packet_class = packet.readUInt8(2);
+            const packet_id = packet.readUInt8(3);
+            const packet_size = packet.readUInt16LE(4);
+            const payload = packet.subarray(6, 6 + packet_size);
+
+            if (payload.length != packet_size)
+                return this.packetListeners.get("error")?.forEach((listener) => listener(new Error("invalide packet payload")));
+
+            this.parsers.forEach((parser) => {
+                if (parser.compareSignature(packet_class, packet_id)) {
+                    this.packetListeners.get("data")?.forEach((listener) => {
+                        try {
+                            const data = parser.parse(payload) as any;
+                            data.packet_class = packet_class;
+                            data.packet_id = packet_id;
+                            listener(data);
+                        } catch (error) {
+                            this.packetListeners.get("error")?.forEach((listener) => listener(error));
+                        }
+                    });
+                }
+            });
+        }
     }
 
     registerParser(parser: PacketParser): void {
