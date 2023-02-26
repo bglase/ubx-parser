@@ -8,5 +8,5 @@ export declare class UBXParser {
     parse(buffer: Buffer): void;
     registerParser(parser: PacketParser): void;
     unregisterParser(parser: PacketParser): void;
-    on(event: "warning" | "error" | "data", cb: (data: any) => void): void;
+    on(event: "warning" | "error" | "data", cb: (data: any, buffer?: Buffer) => void): void;
 }

@@ -19,10 +19,12 @@ import { UBXParser } from "@nextlvlup/ubx-parser";
 const parser = new UBXParser();
 
 // Add Event Listener
-parser.on("warning", (warning) => console.warn(warning));
-parser.on("error", (error) => console.error(error));
-parser.on("data", (data) => console.log(data));
+parser.on("warning", (warning, buffer) => console.warn(warning));
+parser.on("error", (error, buffer) => console.error(error));
+parser.on("data", (data, buffer) => console.log(data));
 ```
+
+the `buffer` object contains the raw data packet.
 
 ### Example over TCP/IP
 

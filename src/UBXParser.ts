@@ -5,7 +5,7 @@ import { UBX_NAV_PVT_Parser } from "./parser/ubx-nav-pvt";
 
 export class UBXParser {
     private parsers: Array<PacketParser> = [];
-    private packetListeners: Map<string, Array<(data: any) => void>> = new Map();
+    private packetListeners: Map<string, Array<(data: any, buffer?: Buffer) => void>> = new Map();
     private localBuffer: Buffer = Buffer.from("");
 
     constructor() {
@@ -22,7 +22,7 @@ export class UBXParser {
             const packet_end = this.localBuffer.indexOf(Buffer.from([0xb5, 0x62]), 2);
             if (packet_start != 0 && packet_end > 0) {
                 this.localBuffer = this.localBuffer.subarray(packet_end);
-                return this.packetListeners.get("warning")?.forEach((listener) => listener(new Error("invalide packet droped")));
+                return this.packetListeners.get("warning")?.forEach((listener) => listener(new Error("invalide packet droped"), undefined));
             }
 
             if (packet_start != 0 || packet_end == -1) return;
@@ -30,7 +30,8 @@ export class UBXParser {
             const packet = this.localBuffer.subarray(0, packet_end);
             this.localBuffer = this.localBuffer.subarray(packet_end);
 
-            if (packet.length < 8) return this.packetListeners.get("error")?.forEach((listener) => listener(new Error("invalide packet size")));
+            if (packet.length < 8)
+                return this.packetListeners.get("error")?.forEach((listener) => listener(new Error("invalide packet size"), packet));
 
             const packet_class = packet.readUInt8(2);
             const packet_id = packet.readUInt8(3);
@@ -38,7 +39,7 @@ export class UBXParser {
             const payload = packet.subarray(6, 6 + packet_size);
 
             if (payload.length != packet_size)
-                return this.packetListeners.get("error")?.forEach((listener) => listener(new Error("invalide packet payload")));
+                return this.packetListeners.get("error")?.forEach((listener) => listener(new Error("invalide packet payload"), packet));
 
             this.parsers.forEach((parser) => {
                 if (parser.compareSignature(packet_class, packet_id)) {
@@ -65,7 +66,7 @@ export class UBXParser {
         this.parsers = this.parsers.filter((_parser) => _parser != parser);
     }
 
-    on(event: "warning" | "error" | "data", cb: (data: any) => void): void {
+    on(event: "warning" | "error" | "data", cb: (data: any, buffer?: Buffer) => void): void {
         if (this.packetListeners.has(event)) this.packetListeners.get(event)?.push(cb);
         else this.packetListeners.set(event, [cb]);
     }

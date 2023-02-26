@@ -19,20 +19,20 @@ var UBXParser = /** @class */ (function () {
             var packet_end = this_1.localBuffer.indexOf(Buffer.from([0xb5, 0x62]), 2);
             if (packet_start != 0 && packet_end > 0) {
                 this_1.localBuffer = this_1.localBuffer.subarray(packet_end);
-                return { value: (_a = this_1.packetListeners.get("warning")) === null || _a === void 0 ? void 0 : _a.forEach(function (listener) { return listener(new Error("invalide packet droped")); }) };
+                return { value: (_a = this_1.packetListeners.get("warning")) === null || _a === void 0 ? void 0 : _a.forEach(function (listener) { return listener(new Error("invalide packet droped"), undefined); }) };
             }
             if (packet_start != 0 || packet_end == -1)
                 return { value: void 0 };
             var packet = this_1.localBuffer.subarray(0, packet_end);
             this_1.localBuffer = this_1.localBuffer.subarray(packet_end);
             if (packet.length < 8)
-                return { value: (_b = this_1.packetListeners.get("error")) === null || _b === void 0 ? void 0 : _b.forEach(function (listener) { return listener(new Error("invalide packet size")); }) };
+                return { value: (_b = this_1.packetListeners.get("error")) === null || _b === void 0 ? void 0 : _b.forEach(function (listener) { return listener(new Error("invalide packet size"), packet); }) };
             var packet_class = packet.readUInt8(2);
             var packet_id = packet.readUInt8(3);
             var packet_size = packet.readUInt16LE(4);
             var payload = packet.subarray(6, 6 + packet_size);
             if (payload.length != packet_size)
-                return { value: (_c = this_1.packetListeners.get("error")) === null || _c === void 0 ? void 0 : _c.forEach(function (listener) { return listener(new Error("invalide packet payload")); }) };
+                return { value: (_c = this_1.packetListeners.get("error")) === null || _c === void 0 ? void 0 : _c.forEach(function (listener) { return listener(new Error("invalide packet payload"), packet); }) };
             this_1.parsers.forEach(function (parser) {
                 var _a;
                 if (parser.compareSignature(packet_class, packet_id)) {
