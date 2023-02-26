@@ -45,10 +45,10 @@ var UBXParser = /** @class */ (function () {
                             var data = parser.parse(payload);
                             data.packet_class = packet_class;
                             data.packet_id = packet_id;
-                            listener(data);
+                            listener(data, packet);
                         }
                         catch (error) {
-                            (_a = _this.packetListeners.get("error")) === null || _a === void 0 ? void 0 : _a.forEach(function (listener) { return listener(error); });
+                            (_a = _this.packetListeners.get("error")) === null || _a === void 0 ? void 0 : _a.forEach(function (listener) { return listener(error, packet); });
                         }
                     });
                 }

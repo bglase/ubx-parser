@@ -48,9 +48,9 @@ export class UBXParser {
                             const data = parser.parse(payload) as any;
                             data.packet_class = packet_class;
                             data.packet_id = packet_id;
-                            listener(data);
+                            listener(data, packet);
                         } catch (error) {
-                            this.packetListeners.get("error")?.forEach((listener) => listener(error));
+                            this.packetListeners.get("error")?.forEach((listener) => listener(error, packet));
                         }
                     });
                 }
