@@ -1,5 +1,5 @@
 {
-    "name": "@nextlvlup/ubx-parser",
+    "name": "@csllc/ubx-parser",
     "version": "2.0.0",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
@@ -14,10 +14,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Ayax0/ubx-parser.git"
+        "url": "git+https://github.com/bglase/ubx-parser.git"
     },
     "bugs": {
-        "url": "https://github.com/Ayax0/ubx-parser/issues"
+        "url": "https://github.com/bglase/ubx-parser/issues"
     },
     "publishConfig": {
         "access": "public"
@@ -25,7 +25,7 @@
     "files": [
         "dist"
     ],
-    "homepage": "https://github.com/Ayax0/ubx-parser#readme",
+    "homepage": "https://github.com/bglase/ubx-parser#readme",
     "author": "Simon Gander",
     "license": "ISC",
     "devDependencies": {
