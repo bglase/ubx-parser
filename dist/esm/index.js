@@ -1,5 +1,11 @@
 import { UBXParser } from "./UBXParser";
 import { PacketParser } from "./PacketParser";
 import { readBitFromUInt8, readBitFromUInt16, readBitFromUInt32 } from "./Utils";
+import { UBX_NAV_SAT_Parser } from "./parser/ubx-nav-sat";
+import { UBX_NAV_PVT_Parser } from "./parser/ubx-nav-pvt";
+import { UBX_MON_VER_Parser } from "./parser/ubx-mon-ver";
+import { UBX_ESF_STATUS_Parser } from "./parser/ubx-esf-status";
+import { UBX_ESF_MEAS_Parser } from "./parser/ubx-esf-meas";
 export { UBXParser, PacketParser, readBitFromUInt8, readBitFromUInt16, readBitFromUInt32 };
+export { UBX_NAV_SAT_Parser, UBX_MON_VER_Parser, UBX_NAV_PVT_Parser, UBX_ESF_STATUS_Parser, UBX_ESF_MEAS_Parser };
 export * from "./types";
